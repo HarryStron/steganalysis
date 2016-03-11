@@ -17,18 +17,18 @@ public class Analyse {
         //generate filtered unedited image
         BufferedImage bi = ImageIO.read(new File(imgPath));
         int[][][] imgArray = Tools.getImageArray(bi);
-        SteganographyManager.buildFilteredImgFromArray(imgArray, imgFilteredPNG);
+        Tools.buildFilteredImgFromArray(imgArray, imgFilteredPNG);
 
         //stego and new image
         File f = new File(fileToHidePath);
         byte[] fileBytes = Files.readAllBytes(f.toPath());
         int[][][] newImgArray = SteganographyManager.hide(imgPath, fileBytes);
-        SteganographyManager.buildImgFromArray(newImgArray, newImgPath);
+        Tools.buildImgFromArray(newImgArray, newImgPath);
 
         //generate filtered edited image
         BufferedImage bi2 = ImageIO.read(new File(newImgPath));
         int[][][] imgArray2 = Tools.getImageArray(bi2);
-        SteganographyManager.buildFilteredImgFromArray(imgArray2, newFilteredPNG);
+        Tools.buildFilteredImgFromArray(imgArray2, newFilteredPNG);
 
         System.out.println("\nChange rate for original image: " + checkFlipRate(imgPath));
         System.out.println("\nChange rate for modified image: " + checkFlipRate(newImgPath));
