@@ -25,14 +25,21 @@ public class Tools {
     public static double getFlipRate(int[][][] imageArray) {
         int flips = 0;
         int total = 0;
+        int zeros = 0;
+        int ones = 0;
         boolean lastVisited = getNthSignificantBit(imageArray[0][0][0], 1);
 
-        for (int i = 1; i < imageArray.length; i++) {
+        for (int i = 0; i < imageArray.length; i++) {
             for (int j = 0; j < imageArray[0].length; j++) {
                 for (int k = 0; k < imageArray[0][0].length; k++) {
                     if (getNthSignificantBit(imageArray[i][j][k], 1) != lastVisited) {
                         lastVisited = getNthSignificantBit(imageArray[i][j][k], 1);
                         flips++;
+                    }
+                    if (getNthSignificantBit(imageArray[i][j][k], 1)) {
+                        ones++;
+                    } else {
+                        zeros++;
                     }
                     total++;
                 }
@@ -42,7 +49,25 @@ public class Tools {
         System.out.println("\nStatistics for LSBs: ");
         System.out.println("total: " + total);
         System.out.println("flips: " + flips);
+
+        double expected = (double) total / 2;
+        double zeroChi = ((zeros - expected)*(zeros - expected))/expected;
+        double oneChi = ((ones - expected)*(ones - expected))/expected;
+        System.out.println("zeroChi: " + zeroChi + " oneChi: " + oneChi);
+        double chi = zeroChi + oneChi;
+        double criticalValue = 3.841;
+        if (chi > criticalValue) { //reject hypothesis
+            System.out.println(chi + " > " + criticalValue);
+
+            System.out.println("Stego off");
+        } else {
+            System.out.println(chi + " <= " + criticalValue);
+
+            System.out.println("Stego on");
+        }
+
         double rate = ((double) flips / total) * 100;
+
 
         return rate;
     }
