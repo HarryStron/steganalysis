@@ -22,7 +22,8 @@ public class Tools {
         return imageArray;
     }
 
-    public static double getFlipRate(int[][][] imageArray) {
+    public static void getStatistics(int[][][] imageArray) {
+        System.out.println("\nGathering statistics. . .");
         int flips = 0;
         int total = 0;
         int zeros = 0;
@@ -30,7 +31,7 @@ public class Tools {
         int block = 0;
         boolean lastVisited = getNthSignificantBit(imageArray[0][0][0], 1);
 
-        System.out.println("chi:");
+        System.out.println("\nGenerating chi-square distribution graph:");
         for (int i = 0; i < imageArray.length; i++) {
             for (int j = 0; j < imageArray[0].length; j++) {
                 //for (int k = 0; k < imageArray[0][0].length; k++) {
@@ -51,22 +52,22 @@ public class Tools {
             double zeroChi = ((zeros - expected)*(zeros - expected))/expected;
             double oneChi = ((ones - expected)*(ones - expected))/expected;
             double chi = zeroChi + oneChi;
-            double criticalValue = 3.841;
-//            double criticalValue = 7.879;
+            double criticalValue = 3.841; // https://people.richland.edu/james/lecture/m170/tbl-chi.html
             if (chi > criticalValue) { //reject hypothesis
-                System.out.print("0");
+                System.out.print("_");
             } else {
-                System.out.print("1");
+                System.out.print("^");
             }
-            System.out.print(',');
+            //System.out.print(','); //delimiter when I want to extract data to tables
              block = 0;
              zeros = 0;
              ones = 0;
         }
 
-        System.out.println("\nStatistics for LSBs: ");
-        System.out.println("total: " + total);
-        System.out.println("flips: " + flips);
+        System.out.println("\n\nStatistics for LSBs: ");
+        System.out.println("total bits: " + total);
+        System.out.println("# of flips: " + flips);
+        System.out.println("flip rate: " + ((double) flips / total) * 100);
 
 //        double expected = (double) total / 2;
 //        double zeroChi = ((zeros - expected)*(zeros - expected))/expected;
@@ -83,11 +84,6 @@ public class Tools {
 //
 //            System.out.println("Stego on");
 //        }
-
-        double rate = ((double) flips / total) * 100;
-
-
-        return rate;
     }
 
     public static boolean getNthSignificantBit(int value, int index) {

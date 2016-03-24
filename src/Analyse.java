@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 public class Analyse {
-    private static String imgPath = "./res/lena.png";
-    private static String imgFilteredPNG = "./res/filteredImg.png";
+    private static String imgPath = "./cover.png";
+    private static String imgFilteredPNG = "./filteredImg.png";
 
-    private static String newImgPath = "./res/newImg.png";
-    private static String newFilteredPNG = "./res/newFilteredImg.png";
+    private static String newImgPath = "./newImg.png";
+    private static String newFilteredPNG = "./newFilteredImg.png";
 
-    private static String fileToHidePath = "./res/70";
+    private static String fileToHidePath = "./embedded";
 
     public static void main(String[] args) throws IOException {
         //generate filtered unedited image
@@ -30,16 +30,14 @@ public class Analyse {
         int[][][] imgArray2 = Tools.getImageArray(bi2);
         Tools.buildFilteredImgFromArray(imgArray2, newFilteredPNG);
 
-        System.out.println("\nChange rate for original image: " + checkFlipRate(imgPath));
-        System.out.println("\nChange rate for modified image: " + checkFlipRate(newImgPath));
+        statistics(imgPath);
+        statistics(newImgPath);
     }
 
-    private static double checkFlipRate(String path) throws IOException {
-        System.out.println("\nMeasuring bit-flip change rate. . .");
-
+    private static void statistics(String path) throws IOException {
         BufferedImage bi = ImageIO.read(new File(path));
         int[][][] imgArray = Tools.getImageArray(bi);
 
-        return Tools.getFlipRate(imgArray);
+        Tools.getStatistics(imgArray);
     }
 }
