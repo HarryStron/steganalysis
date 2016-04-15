@@ -24,29 +24,21 @@ public class Tools {
 
     public static void getStatistics(int[][][] imageArray) {
         System.out.println("\nGathering statistics. . .");
-        int flips = 0;
-        int total = 0;
         int zeros = 0;
         int ones = 0;
         int block = 0;
-        boolean lastVisited = getNthSignificantBit(imageArray[0][0][0], 1);
 
         System.out.println("\nGenerating chi-square distribution graph:");
         for (int i = 0; i < imageArray.length; i++) {
             for (int j = 0; j < imageArray[0].length; j++) {
-                //for (int k = 0; k < imageArray[0][0].length; k++) {
-                    if (getNthSignificantBit(imageArray[i][j][2], 1) != lastVisited) {
-                        lastVisited = getNthSignificantBit(imageArray[i][j][2], 1);
-                        flips++;
-                    }
+//                for (int k = 0; k < imageArray[0][0].length; k++) {
                     if (getNthSignificantBit(imageArray[i][j][2], 1)) {
                         ones++;
                     } else {
                         zeros++;
                     }
-                    total++;
                     block++;
-                //}
+//                }
             }
             double expected = (double) block / 2;
             double zeroChi = ((zeros - expected)*(zeros - expected))/expected;
@@ -64,26 +56,6 @@ public class Tools {
              ones = 0;
         }
 
-        System.out.println("\n\nStatistics for LSBs: ");
-        System.out.println("total bits: " + total);
-        System.out.println("# of flips: " + flips);
-        System.out.println("flip rate: " + ((double) flips / total) * 100);
-
-//        double expected = (double) total / 2;
-//        double zeroChi = ((zeros - expected)*(zeros - expected))/expected;
-//        double oneChi = ((ones - expected)*(ones - expected))/expected;
-//        System.out.println("zeroChi: " + zeroChi + " oneChi: " + oneChi);
-//        double chi = zeroChi + oneChi;
-//        double criticalValue = 3.841;
-//        if (chi > criticalValue) { //reject hypothesis
-//            System.out.println(chi + " > " + criticalValue);
-//
-//            System.out.println("Stego off");
-//        } else {
-//            System.out.println(chi + " <= " + criticalValue);
-//
-//            System.out.println("Stego on");
-//        }
     }
 
     public static boolean getNthSignificantBit(int value, int index) {

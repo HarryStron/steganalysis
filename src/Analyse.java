@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 public class Analyse {
-    private static String imgPath = "./cover.png";
-    private static String imgFilteredPNG = "./filteredImg.png";
+    private static String imgPath = "./res/lena.png";
+    private static String imgFilteredPNG = "./res/filteredImg.png";
 
-    private static String newImgPath = "./newImg.png";
-    private static String newFilteredPNG = "./newFilteredImg.png";
+    private static String newImgPath = "./res/newImg.png";
+    private static String newFilteredPNG = "./res/newFilteredImg.png";
 
-    private static String fileToHidePath = "./embedded";
+    private static String fileToHidePath = "./res/test.txt";
 
     public static void main(String[] args) throws IOException {
         //generate filtered unedited image
